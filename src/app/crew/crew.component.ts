@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrewComponent implements OnInit {
 
+  editToggle = false
   crew: object[] = [
     {name: "Eileen Collins", firstMission: false},
     {name: "Mae Jemison", firstMission: false},
@@ -16,6 +17,18 @@ export class CrewComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  addCrewMember(nameInput, checkbox){
+    this.crew.push({name: nameInput, firstMission: checkbox})
+  }
+
+  editCrewName(nameInput, index){
+    console.log(index)
+  }
+
+  remove(index){
+    this.crew.splice(index)
   }
 
 }
