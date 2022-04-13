@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CrewComponent implements OnInit {
 
-  editToggle = false
+  memberBeingEdited: object = null;
+  inCrew: boolean = false;
+
   crew: object[] = [
     {name: "Eileen Collins", firstMission: false},
     {name: "Mae Jemison", firstMission: false},
@@ -19,16 +21,29 @@ export class CrewComponent implements OnInit {
   ngOnInit() {
   }
 
-  addCrewMember(nameInput, checkbox){
-    this.crew.push({name: nameInput, firstMission: checkbox})
+  add(memberName: string, isFirst: boolean) {
+    for (let i=0; i < this.crew.length; i++) {
+        if(this.crew[i]['name'] === memberName) {
+            this.inCrew = true;
+        }
+    }
+    if (!this.inCrew) {
+        this.crew.push({name: memberName, firstMission: isFirst});
+    }
+    this.inCrew = false;
   }
 
-  editCrewName(nameInput, index){
-    console.log(index)
+  remove(member: object) {
+    let index = this.crew.indexOf(member);
+    this.crew.splice(index, 1);
   }
 
-  remove(index){
-    this.crew.splice(index)
+  edit(member: object) {
+    this.memberBeingEdited = member;
   }
 
+  save(name: string, member: object) {
+    member['name'] = name;
+    this.memberBeingEdited = null;
+  }
 }
